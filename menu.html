@@ -4,10 +4,13 @@
 		<table border="1px" cellspacing="0" cellpadding="0" style="line-height: 2rem;width: 100%;"  bordercolor="cadetblue">
 		</table>
 		</div>
-<form action="#" method="post" id="form1" style="display: none;">
-    	<input type="text" name="id" id="id" value="" placeholder="用户名" style="margin-top: 1rem;"/><br />
-    	<input type="text" name="pass" id="pass" value="" placeholder="密码" style="margin-top: 1rem;"/><br />
-    	<input type="text" name="name" id="name" value="" placeholder="名称" style="margin-top: 1rem;"/><br />
+<form action="#" method="post" id="form_menu" style="display: none;">
+    	<input type="text" name="food_name" id="food_name" value="" placeholder="菜品名称" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="food_p" id="food_p" value="" placeholder="价格" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="food_hot" id="food_hot" value="" placeholder="热度" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="food_sort" id="food_sort" value="" placeholder="排序" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="food_title" id="food_title" value="" placeholder="分类" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="food_img" id="food_img" value="" placeholder="图片" style="margin-top: 1rem;"/><br />
     	<input type="button" value="提交" style="margin-top: 1rem;" onclick="sub()"/>&nbsp;&nbsp;&nbsp;
     	<input type="button" value="删除" id="del" style="margin-top: 1rem;" onclick="del()"/>
    </form>
@@ -16,7 +19,9 @@
 					con = '<tr><th colspan="3">菜品管理</th></tr><tr><td>名称</td><td>图片</td><td>销量</td><td>价格</td><td>分类</td><td>排序</td></tr>';
 					data = [{"title":"热销产品","good":[{"label":"蜜桃四季春","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"53","price":"10","title":"热销产品","id":1,"sort_id":4}]},{"title":"新品推荐","good":[{"label":"泡泡水","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"54","price":"8","title":"新品推荐","id":1,"sort_id":1},{"label":"蜜桃水","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"53","price":"9","title":"新品推荐","id":1,"sort_id":3},{"label":"泡泡水1","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"54","price":"8","title":"新品推荐","id":1,"sort_id":1}]}]
 					for (food in data){
-						con = con+'<tr onclick="admin()" style="cursor:pointer" con_label="'+data[food]['label']+' con_img="'+data[food]['img']+' con_hot="'+data[food]['price']+'"><td>'+data[user]['id']+'</td><td>'+data[user]['pass']+'</td><td>'+data[user]['name']+'</td></tr>';
+						for(cod in data[food]['good']){
+						con = con+'<tr onclick="admin()" style="cursor:pointer" con_label="'+data[food]['good'][cod]['label']+'"><td>'+data[food]['good'][cod]['label']+'</td><td><img style="height:2rem;width:2rem" src="'+data[food]['good'][cod]['img']+'" /></td><td>'+data[food]['good'][cod]['hot']+'</td><td>'+data[food]['good'][cod]['price']+'</td><td>'+data[food]['good'][cod]['title']+'</td><td>'+data[food]['good'][cod]['sord_id']+'</td></tr>';
+						}
 					};
 					$('table').html(con);
 					
@@ -24,12 +29,12 @@
 				function admin(){
 					$('#table').hide(100)
 					alert($(this).attr("id"));
-					$('#form1').show(600);
+					$('#form_menu').show(600);
 					$('#del').show();
 				}
 				function add(){
-					$('#table').hide(100)
-					$('#form1').show(600);
+					$('#table').hide(100);
+					$('#form_menu').show(600);
 					$('#del').hide();
 				}
 				function sub(){
@@ -38,7 +43,7 @@
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
 		                url: "http://localhost/tp5/public/index.php/api/api/login" ,//url
-		                data: $('#form1').serialize(),
+		                data: $('#form_menu').serialize(),
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
 		                    if (result.resultCode == 200) {
@@ -56,7 +61,7 @@
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
 		                url: "http://localhost/tp5/public/index.php/api/api/del" ,//url
-		                data: $('#form1').serialize(),
+		                data: $('#form_menu').serialize(),
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
 		                    if (result.resultCode == 200) {

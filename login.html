@@ -6,6 +6,7 @@
 	<title></title>
 	<link rel="stylesheet" href="css/reset.css" />
 	<link rel="stylesheet" href="css/login.css" />
+	<script src="js/jquery.cookie.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery-3.6.0.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body style="background: #009688;">
@@ -36,5 +37,30 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	
+function add(){
+   			{
+		            $.ajax({
+		            //几个参数需要注意一下
+		                type: "POST",//方法类型
+		                dataType: "json",//预期服务器返回的数据类型
+		                url: "http://localhost/tp5/public/index.php/api/api/login" ,//url
+		                data: $('#form_add').serialize(),
+		                success: function (result) {
+		                    console.log(result);//打印服务端返回的数据(调试用)
+		                    if (result.resultCode == 200) {
+		                        alert("SUCCESS");
+		                        $.cookie('name', 'value', { expires: 7 });
+		                    };
+		                },
+		                error : function() {
+		                    alert("异常！");
+		                }
+		            });
+		        
+   		};
+				});
+   </script>
 </body>
 </html>
