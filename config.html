@@ -1,14 +1,24 @@
     <form action="#" method="post" id="form_config">
     	<img src=""/>
     	公&nbsp;&nbsp;&nbsp;告：
-    	<input type="text" name="pass" id="pass" value="" placeholder="公告" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="ann" id="ann" value="" placeholder="公告" style="margin-top: 1rem;"/><br />
     	店名称：
-    	<input type="text" name="name" id="name" value="" placeholder="店铺名称" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="name_d" id="name_d" value="" placeholder="店铺名称" style="margin-top: 1rem;"/><br />
     	<input type="button" value="修改" style="margin-top: 1rem;margin-left: 3rem;" onclick="sub()"/>&nbsp;&nbsp;&nbsp;
    </form>
    <script type="text/javascript">
+   	$(function(){
+   		$.ajax({
+   			type:"get",
+   			url:"//www.tp5.com/api/api/config",
+   			success:function (res){
+   				$('#ann').val(res['board']);
+   				$('#name_d').val(res['name']);
+   			}
+   		});
+   	});
+   	
    function add(){
-   			{
 		            $.ajax({
 		            //几个参数需要注意一下
 		                type: "POST",//方法类型
@@ -27,6 +37,6 @@
 		                }
 		            });
 		        
-   		};
-				});
+  
+}
    </script>

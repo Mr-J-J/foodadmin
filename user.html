@@ -14,11 +14,19 @@
     <script type="text/javascript">
 				$(function(){
 					con = '<tr><th colspan="3">管理员设置</th></tr><tr><td>账号</td><td>密码</td><td>名称</td></tr>';
-					data = [{"id":"admin","pass":"admin","name":"admin"},{"id":"admin","pass":"admin","name":"admin"}];				
-					for (user in data){
+//					data = [{"id":"admin","pass":"admin","name":"admin"},{"id":"admin","pass":"admin","name":"admin"}];				
+					$.ajax({
+						type:"get",
+						url:"//www.tp5.com/api/api/admin",
+						success:function(res){
+							data = res;
+							for (user in data){
 						con = con+'<tr onclick="admin()" style="cursor:pointer" con_id="'+data[user]['id']+' con_pass="'+data[user]['pass']+' con_name="'+data[user]['name']+'"><td>'+data[user]['id']+'</td><td>'+data[user]['pass']+'</td><td>'+data[user]['name']+'</td></tr>';
 					};
 					$('table').html(con);
+						}
+					});
+					
 					
 				});
 				function admin(){
