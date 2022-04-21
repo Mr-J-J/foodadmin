@@ -1,7 +1,7 @@
 <div style="height: 100%;">
 		<div id="table">
 		<button id="add" style="width: 4rem;margin-bottom: 1rem;" onclick="add()">添加</button>
-		<table border="1px" cellspacing="0" cellpadding="0" style="line-height: 2rem;width: 100%;"  bordercolor="cadetblue">
+		<table id="table_user" border="1px" cellspacing="0" cellpadding="0" style="line-height: 2rem;width: 100%;"  bordercolor="cadetblue">
 		</table>
 		</div>
 <form action="#" method="post" id="form_user" style="display: none;">
@@ -9,7 +9,7 @@
     	<input type="text" name="pass" id="pass" value="" placeholder="密码" style="margin-top: 1rem;"/><br />
     	<input type="text" name="name" id="name" value="" placeholder="名称" style="margin-top: 1rem;"/><br />
     	<input type="button" value="提交" style="margin-top: 1rem;" onclick="sub()"/>&nbsp;&nbsp;&nbsp;
-    	<input type="button" value="删除" id="del" style="margin-top: 1rem;" onclick="del()"/>
+    	<input type="button" value="删除" id="del" style="margin-top: 1rem;" onclick="del_user()"/>
    </form>
     <script type="text/javascript">
 				$(function(){
@@ -21,7 +21,7 @@
 						success:function(res){
 							data = res;
 							for (user in data){
-						con = con+'<tr onclick="admin()" style="cursor:pointer" con_id="'+data[user]['id']+' con_pass="'+data[user]['pass']+' con_name="'+data[user]['name']+'"><td>'+data[user]['id']+'</td><td>'+data[user]['pass']+'</td><td>'+data[user]['name']+'</td></tr>';
+						con = con+'<tr onclick="user_admin('+user+')" style="cursor:pointer" con_id="'+data[user]['id']+' con_pass="'+data[user]['pass']+' con_name="'+data[user]['name']+'"><td>'+data[user]['id']+'</td><td>'+data[user]['pass']+'</td><td>'+data[user]['name']+'</td></tr>';
 					};
 					$('table').html(con);
 						}
@@ -29,47 +29,64 @@
 					
 					
 				});
-				function admin(){
-					$('#table').hide(100);
-					alert($(this).attr("id"));
-					$('#form_user').show(600);
-					$('#del').show();
-				}
+				var sele = 'user_sub';
 				function add(){
-					$('#table').hide(100);
+					$('#table_user').hide(100);
 					$('#form_user').show(600);
 					$('#del').hide();
+					sele = 'user_add';
+				}
+				function user_admin(user){
+					$('#table_user').hide(100);
+					$('#form_user').show(600);
+					sele = 'user_sub';
+					$('#id').val(data[user]['id']);
+					$('#pass').val(data[user]['pass']);
+					$('#name').val(data[user]['name']);
 				}
 				function sub(){
-		            $.ajax({
-		            //几个参数需要注意一下
+					var id = $('#id').val();
+					data_user = $('#form_user').serializeArray();
+					var uPattern = /^\d{3,16}$/;
+					//用户名正则，3到16位数字
+					if(uPattern.test(id)){
+						 $.ajax({
+		           		 //几个参数需要注意一下
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
-		                url: "http://localhost/tp5/public/index.php/api/api/login" ,//url
-		                data: $('#form_user').serialize(),
+		                url: api_url+sele ,//url
+		                data: data_user,
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
-		                    if (result.resultCode == 200) {
-		                        alert("SUCCESS");
-		                    };
+		                    if (result.code != '0') {
+		                         $( "#dialog" ).dialog().html('成功');
+		                    }else{
+		                    	$( "#dialog" ).dialog().html('失败,请检查用户名是否重复');
+		                    }
 		                },
 		                error : function() {
-		                    alert("异常！");
+		                    alert("失败,请检查用户名是否重复");
 		                }
 		            });
+					}else{
+						$( "#dialog" ).dialog().html('账号请输入3到16位数字');
+					}
+		           
 		        };
-				function del(){
+				function del_user(){
 		            $.ajax({
 		            //几个参数需要注意一下
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
-		                url: "http://localhost/tp5/public/index.php/api/api/del" ,//url
+		                url: api_url+"user_del"  ,//url
 		                data: $('#form_user').serialize(),
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
-		                    if (result.resultCode == 200) {
-		                        alert("SUCCESS");
-		                    };
+		                   if (result.code != '0') {
+		                         $( "#dialog" ).dialog().html('删除成功');
+		                    }else{
+		                    	$( "#dialog" ).dialog().html('删除失败');
+		                    }
 		                },
 		                error : function() {
 		                    alert("异常！");

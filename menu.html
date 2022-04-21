@@ -12,7 +12,7 @@
     	<input type="text" name="food_title" id="food_title" value="" placeholder="分类" style="margin-top: 1rem;"/><br />
     	<input type="text" name="food_img" id="food_img" value="" placeholder="图片" style="margin-top: 1rem;"/><br />
     	<input type="button" value="提交" style="margin-top: 1rem;" onclick="sub()"/>&nbsp;&nbsp;&nbsp;
-    	<input type="button" value="删除" id="del" style="margin-top: 1rem;" onclick="del()"/>
+    	<input type="button" value="删除" id="del" style="margin-top: 1rem;" onclick="dele()"/>
    </form>
     <script type="text/javascript">
     	
@@ -23,7 +23,7 @@
 //					data = [{"title":"热销产品","good":[{"label":"蜜桃四季春","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"53","price":"10","title":"热销产品","id":1,"sort_id":4}]},{"title":"新品推荐","good":[{"label":"泡泡水","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"54","price":"8","title":"新品推荐","id":1,"sort_id":1},{"label":"蜜桃水","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"53","price":"9","title":"新品推荐","id":1,"sort_id":3},{"label":"泡泡水1","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"54","price":"8","title":"新品推荐","id":1,"sort_id":1}]}]
 						for (food in data){
 							for(cod in data[food]['good']){
-							con = con+'<tr onclick="admin()" style="cursor:pointer" con_label="'+data[food]['good'][cod]['label']+'"><td>'+data[food]['good'][cod]['label']+'</td><td><img style="height:2rem;width:2rem" src="'+data[food]['good'][cod]['img']+'" /></td><td>'+data[food]['good'][cod]['hot']+'</td><td>'+data[food]['good'][cod]['price']+'</td><td>'+data[food]['good'][cod]['title']+'</td><td>'+data[food]['good'][cod]['sord_id']+'</td></tr>';
+							con = con+'<tr onclick="admin('+food+','+cod+')" style="cursor:pointer" ><td>'+data[food]['good'][cod]['label']+'</td><td><img style="height:2rem;width:2rem" src="'+data[food]['good'][cod]['img']+'" /></td><td>'+data[food]['good'][cod]['hot']+'</td><td>'+data[food]['good'][cod]['price']+'</td><td>'+data[food]['good'][cod]['title']+'</td><td>'+data[food]['good'][cod]['sord_id']+'</td></tr>';
 							}
 						};
 						$('table').html(con);
@@ -34,11 +34,19 @@
 				});
 				//sel为添加或修改选项
 				var sel = 'updata';
-				function admin(){
+				function admin(food,cod){
 					$('#table').hide(100)
-					alert($(this).attr("id"));
 					$('#form_menu').show(600);
+					$('#food_hot').attr('disabled','disabled');
 					$('#del').show();
+					sel = 'updata';
+					data_food = data[food]['good'][cod];
+					$('#food_name').val(data_food['label']);
+					$('#food_p').val(data_food['price']);
+					$('#food_hot').val(data_food['hot']);
+					$('#food_sort').val(data_food['sort_id']);
+					$('#food_title').val(data_food['title']);
+					$('#food_img').val(data_food['img']);
 				}
 				
 				function add(){
@@ -48,41 +56,48 @@
 					sel = 'add';
 				}
 				function sub(){
+					$('#food_hot').attr('disabled',false);
 		            $.ajax({
 				            //几个参数需要注意一下
 				                type: "POST",//方法类型
 				                dataType: "json",//预期服务器返回的数据类型
 				                url: api_url+sel ,//url
-				                data: $('#form_add').serialize(),
+				                data: $('#form_menu').serialize(),
 				                success: function (result) {
 				                    console.log(result);//打印服务端返回的数据(调试用)
-				                    if (result.resultCode != '0') {
-				                        $( "#dialog" ).dialog().html('添加成功');
-				                    };
+				                    if (result.code != '0') {
+				                        $( "#dialog" ).dialog().html('修改成功');
+				                        $('#food_hot').attr('disabled','disabled');
+				                    }else{
+				                    	$( "#dialog" ).dialog().html('修改失败');
+				                    }
 				                },
 				                error : function() {
 				                    alert("异常！");
 				                }
 				            });
-		       };
+		       }
 
-				function del(){
+				function dele(){
+					console.log('2');
 		            $.ajax({
 		            //几个参数需要注意一下
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
-		                url: "http://localhost/tp5/public/index.php/api/api/del" ,//url
+		                url: api_url+"del" ,//url
 		                data: $('#form_menu').serialize(),
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
-		                    if (result.resultCode == 200) {
-		                        alert("SUCCESS");
-		                    };
+		                    if (result.code != '0') {
+		                         $( "#dialog" ).dialog().html('删除成功');
+		                    }else{
+		                    	$( "#dialog" ).dialog().html('删除失败');
+		                    }
 		                },
 		                error : function() {
 		                    alert("异常！");
 		                }
 		            });
-		        };
+		        }
 			</script>
 </div>
