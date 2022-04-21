@@ -17,7 +17,7 @@
 //					data = [{"id":"admin","pass":"admin","name":"admin"},{"id":"admin","pass":"admin","name":"admin"}];				
 					$.ajax({
 						type:"get",
-						url:"//www.tp5.com/api/api/admin",
+						url:api_url+"admin",
 						success:function(res){
 							data = res;
 							for (user in data){

@@ -17,7 +17,7 @@
     <script type="text/javascript">
     	
 				$(function(){
-					$.ajax({url:"http://www.tp5.com/api/api/commodity",success:function(result){
+					$.ajax({url:api_url+"commodity",success:function(result){
       					  data = result;
       					  con = '<tr><th colspan="3">菜品管理</th></tr><tr><td>名称</td><td>图片</td><td>销量</td><td>价格</td><td>分类</td><td>排序</td></tr>';
 //					data = [{"title":"热销产品","good":[{"label":"蜜桃四季春","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"53","price":"10","title":"热销产品","id":1,"sort_id":4}]},{"title":"新品推荐","good":[{"label":"泡泡水","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"54","price":"8","title":"新品推荐","id":1,"sort_id":1},{"label":"蜜桃水","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"53","price":"9","title":"新品推荐","id":1,"sort_id":3},{"label":"泡泡水1","img":"https:\/\/cdn.uviewui.com\/uview\/swiper\/3.jpg","hot":"54","price":"8","title":"新品推荐","id":1,"sort_id":1}]}]
@@ -32,35 +32,40 @@
 					
 					
 				});
+				//sel为添加或修改选项
+				var sel = 'updata';
 				function admin(){
 					$('#table').hide(100)
 					alert($(this).attr("id"));
 					$('#form_menu').show(600);
 					$('#del').show();
 				}
+				
 				function add(){
 					$('#table').hide(100);
 					$('#form_menu').show(600);
 					$('#del').hide();
+					sel = 'add';
 				}
 				function sub(){
 		            $.ajax({
-		            //几个参数需要注意一下
-		                type: "POST",//方法类型
-		                dataType: "json",//预期服务器返回的数据类型
-		                url: "http://localhost/tp5/public/index.php/api/api/login" ,//url
-		                data: $('#form_menu').serialize(),
-		                success: function (result) {
-		                    console.log(result);//打印服务端返回的数据(调试用)
-		                    if (result.resultCode == 200) {
-		                        alert("SUCCESS");
-		                    };
-		                },
-		                error : function() {
-		                    alert("异常！");
-		                }
-		            });
-		        };
+				            //几个参数需要注意一下
+				                type: "POST",//方法类型
+				                dataType: "json",//预期服务器返回的数据类型
+				                url: api_url+sel ,//url
+				                data: $('#form_add').serialize(),
+				                success: function (result) {
+				                    console.log(result);//打印服务端返回的数据(调试用)
+				                    if (result.resultCode != '0') {
+				                        $( "#dialog" ).dialog().html('添加成功');
+				                    };
+				                },
+				                error : function() {
+				                    alert("异常！");
+				                }
+				            });
+		       };
+
 				function del(){
 		            $.ajax({
 		            //几个参数需要注意一下

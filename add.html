@@ -5,23 +5,20 @@
     	<input type="text" name="food_sort" id="food_sort" value="" placeholder="排序" style="margin-top: 1rem;"/><br />
     	<input type="text" name="food_title" id="food_title" value="" placeholder="分类" style="margin-top: 1rem;"/><br />
     	<input type="text" name="food_img" id="food_img" value="" placeholder="图片" style="margin-top: 1rem;"/><br />
-    	<input type="button" value="提交" style="margin-top: 1rem;" onclick="add()"/>&nbsp;&nbsp;&nbsp;
+    	<input type="button" value="提交" style="margin-top: 1rem;" onclick="add_food()"/>&nbsp;&nbsp;&nbsp;
    </form>
    <script type="text/javascript">
-   	$(function(){
-   		function add(){
-   			{
+   		function add_food(){
 		            $.ajax({
 		            //几个参数需要注意一下
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
-		                url: "http://localhost/tp5/public/index.php/api/api/add" ,//url
+		                url: api_url+"add" ,//url
 		                data: $('#form_add').serialize(),
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
-		                    if (result.resultCode == 200) {
-		                        alert("SUCCESS");
-		                        
+		                    if (result.resultCode != '0') {
+		                        $( "#dialog" ).dialog().html('添加成功');
 		                    };
 		                },
 		                error : function() {
@@ -30,5 +27,4 @@
 		            });
 		        
    		};
-				});
    </script>

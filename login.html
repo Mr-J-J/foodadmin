@@ -3,64 +3,74 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title></title>
+	<title>登录</title>
 	<link rel="stylesheet" href="css/reset.css" />
 	<link rel="stylesheet" href="css/login.css" />
-	<script src="js/jquery.cookie.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery-3.6.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="jquery-ui-1.13.1.custom/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="jquery-ui-1.13.1.custom/jquery-ui.css"/>
+	<script src="js/sakura-less.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/config/api_set.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.cookie.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body style="background: #009688;">
 <div class="page">
 	<div class="loginwarrp">
 		<div class="logo">管理员登陆</div>
         <div class="login_form">
-			<form id="Login" name="Login" method="post" onsubmit="" action="">
+			<form id="Login" name="Login" method="post" action="#">
 				<span>用户名：</span>
-		
-					
+
 					<input type="text" name="UserName" class="login_input">
 		
-			
 					<span>密　码：</span>
+					
 					<input type="password" name="password" class="login_input">
 	
 				<li class="login-item verify">
+					
 					<span>验证码：</span>
 					<input type="text" name="CheckCode" class="login_input verify_input">
+					
 				</li>
 				<img src="images/verify.png" border="0" class="verifyimg" />
 				<div class="clearfix"></div>
-				<li class="login-sub">
-					<input type="submit" name="Submit" value="登录" />
+				<li class="login-sub" id="login-sub" >
+					<input type="button" onclick="login()" value="登录" style="cursor: pointer;"/>
 				</li>                      
            </form>
 		</div>
 	</div>
+	<div id="dialog" title="提示" style="text-align: center;"></div>
 </div>
 <script type="text/javascript">
 	
-function add(){
-   			{
+	function login(){
 		            $.ajax({
 		            //几个参数需要注意一下
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
-		                url: "http://localhost/tp5/public/index.php/api/api/login" ,//url
-		                data: $('#form_add').serialize(),
+		                url: api_url+"login" ,//url
+		                data: $('#Login').serialize(),
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
-		                    if (result.resultCode == 200) {
-		                        alert("SUCCESS");
-		                        $.cookie('name', 'value', { expires: 7 });
+		                    if (result.code == '200') {
+		                        $( "#dialog" ).dialog().html('登录成功');
+		                        $.cookie('token', result.msg.token, { expires: 7 });
+		                        $.cookie('name', result.msg.name, { expires: 7 });
+		                        setTimeout("window.location.href='index.html'",2000);
+		                        
+		                    }else{
+		                    	$( "#dialog" ).dialog().html('登录失败，请检查账号密码是否正确');
 		                    };
 		                },
 		                error : function() {
-		                    alert("异常！");
+		                    $( "#dialog" ).dialog().html("异常！");
 		                }
 		            });
+		            
 		        
-   		};
-				});
+   	};
    </script>
 </body>
 </html>

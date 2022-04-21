@@ -1,35 +1,39 @@
     <form action="#" method="post" id="form_config">
-    	<img src=""/>
+    	<input type="image" name="logo" id="logo" src="" value="" /><br />
     	公&nbsp;&nbsp;&nbsp;告：
-    	<input type="text" name="ann" id="ann" value="" placeholder="公告" style="margin-top: 1rem;"/><br />
+    	<input type="text" name="board" id="board" value="" placeholder="公告" style="margin-top: 1rem;"/><br />
     	店名称：
     	<input type="text" name="name_d" id="name_d" value="" placeholder="店铺名称" style="margin-top: 1rem;"/><br />
     	<input type="button" value="修改" style="margin-top: 1rem;margin-left: 3rem;" onclick="sub()"/>&nbsp;&nbsp;&nbsp;
    </form>
+   
    <script type="text/javascript">
    	$(function(){
    		$.ajax({
    			type:"get",
-   			url:"//www.tp5.com/api/api/config",
+   			url:api_url+"config",
    			success:function (res){
-   				$('#ann').val(res['board']);
+   				$('#board').val(res['board']);
    				$('#name_d').val(res['name']);
+   				$('#logo').attr('src',res['logo']);
    			}
    		});
    	});
    	
-   function add(){
+   function sub(){
 		            $.ajax({
 		            //几个参数需要注意一下
 		                type: "POST",//方法类型
 		                dataType: "json",//预期服务器返回的数据类型
-		                url: "http://localhost/tp5/public/index.php/api/api/config" ,//url
+		                url: api_url+"config_set" ,//url
 		                data: $('#form_config').serialize(),
 		                success: function (result) {
 		                    console.log(result);//打印服务端返回的数据(调试用)
-		                    if (result.resultCode == 200) {
-		                        alert("SUCCESS");
+		                    if (result.code != '0') {
+		                        $( "#dialog" ).dialog().html('数据已修改');
 		                        
+		                    }else{
+		                    	$( "#dialog" ).dialog().html('失败，请改变数据');
 		                    };
 		                },
 		                error : function() {

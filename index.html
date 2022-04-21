@@ -1,100 +1,66 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>后台管理系统</title>
-<link type="text/css" rel="stylesheet" href="css/style.css" />
-<script type="text/javascript" src="js/menu.js"></script>
-<script src="js/remchange.js" type="text/javascript" charset="utf-8"></script>
-<script src="jquery-ui-1.13.1.custom/external/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
-<script src="jquery-ui-1.13.1.custom/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="jquery-ui-1.13.1.custom/jquery-ui.css"/>
-<script type="text/javascript">
-
-	  $(function() {
-	    $( "#tabs" ).tabs();
-	  });
-</script>
-</head>
-
-<body>
-<div class="top"></div>
-<div id="header">
-	<div class="logo">点餐后台管理系统</div>
-	<div class="navigation">
-		<ul>
-		 	<li>欢迎您！</li>
-			<li><a href="">张山</a></li>
-			<li><a href="">修改密码</a></li>
-			<li><a href="">设置</a></li>
-			<li><a href="">退出</a></li>
-		</ul>
-	</div>
-</div>
-<div id="content">
-	<div class="left_menu">
-				<ul id="nav_dot">
-      <li>
-          <h4 class="M1"><span></span>系统公告</h4>
-          <div class="list-item none">
-            <a href=''>系统公告1</a>
-            <a href=''>系统公告2</a>
-            <a href=''>系统公告3</a>
-            <a href=''>系统公告4</a>
-          </div>
-        </li>
-        <li>
-          <h4 class="M2"><span></span>工单处理</h4>
-          <div class="list-item none">
-            <a href=''>工单处理1</a>
-            <a href=''>工单处理2</a>
-            <a href=''>工单处理3</a>
-            <a href=''>工单处理4</a>
-            <a href=''>工单处理5</a>          
-           </div>
-        </li>
-        <li>
-          <h4 class="M3"><span></span>基础教学</h4>
-          <div class="list-item none">
-            <a href=''>基础教学1</a>
-            <a href=''>基础教学2</a>
-            <a href=''>基础教学3</a>
-          </div>
-        </li>
-				<li>
-          <h4 class="M4"><span></span>评论管理</h4>
-          <div class="list-item none">
-            <a href=''>评论管理1</a>
-            <a href=''>评论管理2</a>
-            <a href=''>评论管理3</a>
-          </div>
-        </li>
-				
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/remchange.js" type="text/javascript" charset="utf-8"></script>
+		<script src="jquery-ui-1.13.1.custom/external/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="jquery-ui-1.13.1.custom/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="jquery-ui-1.13.1.custom/jquery-ui.css"/>
+		<link rel="stylesheet" type="text/css" href="css/header.css"/>
+		<script src="js/sakura-less.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config/api_set.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.cookie.min.js" type="text/javascript" charset="utf-8"></script>
+	 <script>
+  $(function() {
+  	if(!$.cookie('token')){
+  		window.location.href="login.html";
+  	};
+    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+  });
+  </script>
+  <style>
+  .ui-tabs-vertical { width: 55em; }
+  .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+  .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+  .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+  .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
+  .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
+  </style>
+	</head>
+	<body>
+		<header>
+			<div id="header">
+				<div class="logo">点餐后台管理系统</div>
+				<div class="navigation">
+					<ul>
+					 	<li>欢迎您！</li>
+						<li><a href="">张山</a></li>
+						<li><a href="">修改密码</a></li>
+						<li><a href="">设置</a></li>
+						<li><a href="">退出</a></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+<div id="tabs" style="position: absolute;top: 90px;width: 80%;">
+  <ul>
+    <li><a href="#tabs-1">首&nbsp;&nbsp;&nbsp;&nbsp;页</a></li>
+    <li><a href="menu.html">菜品管理</a></li>
+    <li><a href="add.html">添加菜品</a></li>
+    <li><a href="config.html">店铺管理</a></li>
+    <li><a href="user.html">管&nbsp;&nbsp;理&nbsp;&nbsp;员&nbsp;</a></li>
   </ul>
-		</div>
-		<div class="m-right">
-			<div class="right-nav">s
-					  <div id="tabs-1">
-					    <h2>内容标题 1</h2>
-					    <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-					  </div>
-					  <div id="tabs-2">
-					    <h2>内容标题 2</h2>
-					    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-					  </div>
-					  <div id="tabs-3">
-					    <h2>内容标题 3</h2>
-					    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-					    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
-					  </div>
-			</div>
-			<div class="main">
-				
-			</div>
-		</div>
+  <div id="tabs-1">
+    <h2>欢迎使用派大星点餐系统</h2>
+    <p>您可以再次设置小程序的配置</p>
+  
+    
+  </div>
+ 
 </div>
-<div class="bottom"></div>
 <div id="footer"><p>小程序点餐系统</p></div>
-<script>navList(12);</script>
-</body>
+	</body>
+	<div id="dialog" title="提示" style="text-align: center;"></div>
 </html>
